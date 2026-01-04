@@ -1,0 +1,30 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+END
+Attribute VB_Name = "ThisWorkbook"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = True
+Option Explicit
+
+'-------------------------------------------------------------------------------
+' イベント名 : Workbook_Open
+' 概要       : ブック起動時の初期化処理。
+'              必要なワークシートが存在するかを検証し、
+'              現在の表示状態から「入力モード」または「結果モード」を判定して
+'              それぞれの初期化処理を実行する。
+'-------------------------------------------------------------------------------
+Private Sub Workbook_Open()
+
+    If Not ValidateRequiredSheets(ThisWorkbook) Then Exit Sub
+
+    If IsInputMode(ThisWorkbook) Then
+        
+        InitializeInputMode ThisWorkbook
+    Else
+        
+        InitializeResultMode ThisWorkbook
+    End If
+End Sub

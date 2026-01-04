@@ -1,0 +1,23 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+END
+Attribute VB_Name = "Result"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = True
+Option Explicit
+
+'-------------------------------------------------------------------------------
+' イベント名 : Worksheet_SelectionChange
+' 概要       : ワークシート上でセル選択が変更されたときに呼ばれるイベント。
+'              選択行の検索結果情報をヘッダ表示エリアに反映する処理を
+'              UpdateSourceCell に委譲する。
+' 引数       : Target - 選択されたセル範囲
+'-------------------------------------------------------------------------------
+Private Sub Worksheet_SelectionChange(ByVal target As Range)
+
+   ' 選択変更時のソースセル更新処理を呼び出す
+    UpdateSourceCell target
+End Sub
