@@ -31,92 +31,33 @@
 
 ---
 
-## 🚀インストール & セットアップ手順
+## 🚀インストール
 
-本プロジェクトは **Excel VBA を GitHub で安全に管理するための構成**を採用しています。  
-VBA ソースはすべてテキスト（`.bas / .cls / .dcm`）として管理し、  
-Excel ファイル（`.xlsm`）は **PowerShell により自動生成**します。
+- 以下の GitHub Releases ページから最新版をダウンロード  
+  👉 https://github.com/ichiriki-sha/ezGrepView/releases/
 
-## 1. リポジトリの取得
+---
 
-```powershell
-git clone https://github.com/ichiriki-sha/ezGrepView.git
-cd ezGrepView
-```
+## 📸 デモ
 
-## 2. ディレクトリ構成
+- Main シート
+![Screenshot](assets/screenshot1.png)
 
-```powershell
-ezGrepView/
-├─ src/                        # Git管理の正
-│   ├─ modBusinessCommon.bas
-│   ├─ modBusinessMain.bas
-│   …
-│   └─ ThisWorkbook.dcm
-├─ excel/
-│   └─ ezGrepView.xlsm        # exportで自動生成（VBAなし）
-├─ dev/
-│   └─ ezGrepView.xlsm        # 開発用
-├─ tools/
-│   ├─ export_vba.ps1         # dev/Excel → src/ + excel/Excel
-│   └─ import_vba.ps1         # src/ + excel/Excel → excel/Excel 
-├─ .gitignore
-└─ README.md
-```
+- Result シート
+![Screenshot](assets/screenshot2.png)
 
-## 3. Excel の初期設定（重要）
+- Comment シート
+![Screenshot](assets/screenshot3.png)
 
-1. Excel を起動
+---
 
-2. ファイル → オプション
+## 📑 シート構成
 
-3. セキュリティ センター → セキュリティ センターの設定
-
-4. マクロの設定
-
-- 「警告を表示してすべてのマクロを無効にする」
-
-5. VBA プロジェクト モデルへのアクセス
-
-- ✅ 有効にする
-
-  ※ これが無効だと PowerShell から VBA を操作できません
-
-## 4. Excel の生成（src → excel）
-
-```powershell
-cd tools
-.\import_vba.ps1
-```
-
-- `excel/ezGrepView.xlsm` にソースがインポートされます
-
-## 5. 開発フロー
-
-1. `excel/ezGrepView.xlsm` を `dev` にコピーする。
-
-```powershell
-cd ..\dev
-Copy-Item -Path ..\excel\ezGrepView.xlsm -Destination .
-```
-
-2. VBA を編集
-
-- dev/ezGrepView.xlsm を開く
-
-- VBA エディタで修正
-
-- Excel を保存
-
-3. ソースをエクスポート（dev → src）
-
-```powershell
-.\export_vba.ps1
-```
-
-- src/*.bas / *.cls / *.dcm が更新されます
-
-- 同時に VBAを含まない配布用 Excel が excel/ に生成されます
+| シート名 | 内容 |
+|--------|------|
+| Main | 入力画面（grep結果・設定） |
+| Result | 検索結果一覧・ソース表示 |
+| Comment | 拡張子別コメント定義 |
 
 ---
 
@@ -124,7 +65,7 @@ Copy-Item -Path ..\excel\ezGrepView.xlsm -Destination .
 
 ### ① サクラエディタで grep 実行
 
-サクラエディタで検索を実行し、  **結果をファイルとして保存** します。
+サクラエディタで検索を実行し、 **結果をファイルとして保存** します。
 
 ### ② Main シートで設定
 
@@ -152,13 +93,23 @@ Copy-Item -Path ..\excel\ezGrepView.xlsm -Destination .
 
 ---
 
-## 📑 シート構成
+## 📁ディレクトリ構成
 
-| シート名 | 内容 |
-|--------|------|
-| Main | 入力画面（grep結果・設定） |
-| Result | 検索結果一覧・ソース表示 |
-| Comment | 拡張子別コメント定義 |
+```powershell
+ezGrepView/
+├─ src/                        # Git管理の正
+│   └─ *.bas / *.cls / *.dcm
+├─ excel/
+│   └─ ezGrepView.xlsm        # exportで自動生成（VBAなし）
+├─ dev/
+│   └─ ezGrepView.xlsm        # 開発用
+├─ tools/
+│   ├─ export_vba.ps1         # dev/Excel → src/ + excel/Excel
+│   └─ import_vba.ps1         # src/ + excel/Excel → excel/Excel 
+├─ .gitignore
+├─ CHANGELOG.md
+└─ README.md
+```
 
 ---
 
